@@ -1,0 +1,145 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  /* COLORS: Organic & Earthy */
+
+  /* Primary: Forest / Sage (Growth, Calm) */
+  --primary-50: #f2fcf5;
+  --primary-100: #e3fcec;
+  --primary-200: #bbf7d0;
+  /* Keeping some vibrancy for UI elements */
+  --primary-300: #86efac;
+  --primary-400: #4ade80;
+  --primary-500: #22c55e;
+  --primary-600: #15803d;
+  /* Deeper Green */
+  --primary-700: #14532d;
+  --primary-800: #064e3b;
+  --primary-900: #022c22;
+
+  /* Secondary: Stone / Sand (Grounding, Paper) */
+  --secondary-50: #fafaf9;
+  --secondary-100: #f5f5f4;
+  --secondary-200: #e7e5e4;
+  --secondary-300: #d6d3d1;
+  --secondary-400: #a8a29e;
+  --secondary-500: #78716c;
+  --secondary-600: #57534e;
+  --secondary-700: #44403c;
+  --secondary-800: #292524;
+  --secondary-900: #1c1917;
+
+  /* Neutral: Warm Greys */
+  --neutral-50: #fafafa;
+  --neutral-100: #f4f4f5;
+  --neutral-200: #e4e4e7;
+  --neutral-300: #d4d4d8;
+  --neutral-400: #a1a1aa;
+  --neutral-500: #71717a;
+  --neutral-600: #52525b;
+  --neutral-700: #3f3f46;
+  --neutral-800: #27272a;
+  --neutral-900: #18181b;
+
+  /* Semantic Colors */
+  --color-primary: var(--primary-700);
+  --color-primary-hover: var(--primary-800);
+  --color-secondary: var(--secondary-600);
+
+  /* Paper-like Backgrounds */
+  --color-background: #faf9f6;
+  /* Off-white / Cream */
+  --color-surface: #ffffff;
+
+  --color-text-main: var(--secondary-900);
+  --color-text-muted: var(--secondary-500);
+  --color-border: var(--secondary-200);
+
+  /* Shadows - softer, more diffuse */
+  --shadow-sm: 0 1px 2px 0 rgba(60, 64, 67, 0.1);
+  --shadow-md: 0 4px 6px -1px rgba(60, 64, 67, 0.1), 0 2px 4px -1px rgba(60, 64, 67, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(60, 64, 67, 0.1), 0 4px 6px -2px rgba(60, 64, 67, 0.05);
+
+  /* Typography */
+  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: 'Playfair Display', serif;
+
+  /* Radii */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+  line-height: 1.6;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Noise Texture Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--primary-900);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: color 0.2s ease;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--secondary-300);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--secondary-400);
+}

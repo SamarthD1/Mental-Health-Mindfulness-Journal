@@ -1,0 +1,258 @@
+/* Journal.css - Organic Notebook Theme */
+
+/* Mood Pills - Natural & Tactile */
+.mood-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+}
+
+.mood-pill {
+    border: 1px solid var(--secondary-200);
+    background: var(--bg-paper, #fff);
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    /* Slightly organic pill */
+    font-size: 0.95rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    color: var(--secondary-600);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.05);
+    /* Subtle depth */
+}
+
+.mood-pill:hover {
+    background: var(--secondary-50);
+    transform: translateY(-1px) rotate(-1deg);
+    border-color: var(--secondary-300);
+}
+
+.mood-pill.selected {
+    background: var(--primary-50);
+    border-color: var(--primary-600);
+    color: var(--primary-900);
+    box-shadow: 1px 2px 0 var(--primary-200);
+    /* Offset shadow */
+    transform: translateY(-1px);
+    font-weight: 600;
+}
+
+.mood-emoji {
+    font-size: 1.25rem;
+}
+
+/* Notebook Editor - Ruled Paper Style */
+textarea {
+    line-height: 2rem;
+    font-size: 1.1rem;
+    font-family: var(--font-body);
+    color: var(--primary-900);
+    border: none;
+    /* Ruled lines effect */
+    background-image: linear-gradient(transparent 1.9rem, var(--secondary-200) 1.9rem);
+    background-size: 100% 2rem;
+    background-attachment: local;
+    background-color: transparent;
+    padding: 0.4rem 0.5rem 0 0;
+    /* Align text to lines */
+    box-shadow: none;
+    border-radius: 0;
+    resize: vertical;
+}
+
+textarea:focus {
+    outline: none;
+    box-shadow: none;
+    /* Darker line on focus? No, keep it subtle */
+}
+
+/* Inputs in Journal Form */
+.input-lg {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    color: var(--primary-900);
+    border: none;
+    background: transparent;
+    padding: 0.5rem 0;
+    border-bottom: 2px dashed var(--secondary-300);
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 1rem;
+}
+
+.input-lg:focus {
+    box-shadow: none;
+    border-color: var(--primary-600);
+}
+
+.input-lg::placeholder {
+    color: var(--secondary-300);
+    font-style: italic;
+}
+
+/* TIMELINE - Hand-drawn Feel */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--secondary-200);
+    /* Spine */
+    margin-left: 1rem;
+}
+
+.timeline-group {
+    position: relative;
+}
+
+/* The "Date" Marker */
+.timeline-date {
+    font-family: var(--font-heading);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary-800);
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+    font-style: italic;
+    letter-spacing: 0.02em;
+}
+
+.timeline-date::before {
+    content: '';
+    position: absolute;
+    left: -1.45rem;
+    /* Center on spine */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 0.8rem;
+    height: 0.8rem;
+    background: var(--bg-paper, #fff);
+    border: 2px solid var(--primary-600);
+    border-radius: 50% 45% 55% 40%;
+    /* Organic circle */
+    z-index: 1;
+    box-shadow: 0 0 0 4px var(--color-background, #fafaf9);
+    /* Breathing room from spine */
+}
+
+/* Entry Card - Physical Card on Desk */
+.entry-card {
+    background: var(--bg-paper, #fff);
+    border: 1px solid var(--secondary-200);
+    border-radius: 2px;
+    padding: 1.5rem;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    cursor: pointer;
+    position: relative;
+    /* Organic stacking */
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1.5rem;
+}
+
+/* Random rotations for cards */
+.entry-card:nth-child(3n+1) {
+    transform: rotate(-0.5deg);
+}
+
+.entry-card:nth-child(3n+2) {
+    transform: rotate(0.8deg);
+}
+
+.entry-card:nth-child(3n+3) {
+    transform: rotate(-0.3deg);
+}
+
+.entry-card:hover {
+    transform: rotate(0) scale(1.02) translateY(-2px);
+    box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.08);
+    /* Lift off desk */
+    z-index: 10;
+    border-color: var(--secondary-300);
+}
+
+.entry-card.active {
+    background: #fffbef;
+    /* Slight yellow tint like note paper? Or stick to paper-50 */
+    background: var(--primary-50);
+    border-color: var(--primary-300);
+    transform: rotate(0) scale(1.02);
+    box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* Colored accent strip - modeled as Washi Tape */
+.entry-card::after {
+    /* Use border-left provided by inline style, but maybe we can override it?
+       Actually the inline style sets border-left-color. We can use that.
+    */
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-2deg);
+    width: 30%;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.03);
+    /* Faint tape look? */
+    /* Wait, "Washi Tape" is complex. Let's stick to the color bar. */
+    display: none;
+}
+
+.entry-card {
+    border-left-width: 0;
+    /* Override the thick 6px border */
+    border-top-width: 4px;
+    /* Move accent to top */
+    border-top-style: solid;
+    /* Color handled by inline style 'borderLeftColor' - wait, we need to change JSX to borderTopColor if we flip it.
+       Or we can just use border-left as 'spine'. Let's stick to left but make it thinner and organic.
+    */
+    border-left-width: 4px;
+}
+
+.entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.75rem;
+}
+
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.entry-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--primary-900);
+    margin: 0;
+    line-height: 1.2;
+}
+
+.entry-mood-icon {
+    font-size: 1.5rem;
+    filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.1));
+}
+
+.entry-content-preview {
+    color: var(--secondary-700);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.7;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    opacity: 0.9;
+}

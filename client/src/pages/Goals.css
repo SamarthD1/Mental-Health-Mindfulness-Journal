@@ -1,0 +1,63 @@
+/* Additions to Pages.css for Goals */
+
+.goal-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    /* Checkbox, Content, Delete */
+    gap: 1rem;
+    align-items: center;
+    padding: 1.25rem;
+    border: 1px solid var(--neutral-200);
+    border-radius: var(--radius-lg);
+    background: white;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.goal-card:hover {
+    border-color: var(--primary-300);
+    box-shadow: var(--shadow-sm);
+    transform: translateY(-1px);
+}
+
+.goal-card.completed {
+    background: var(--neutral-50);
+    border-color: var(--neutral-200);
+    opacity: 0.8;
+}
+
+.goal-card.completed .goal-desc {
+    text-decoration: line-through;
+    color: var(--neutral-500);
+}
+
+/* Custom Checkbox */
+.goal-card input[type="checkbox"] {
+    width: 1.5rem;
+    height: 1.5rem;
+    accent-color: var(--primary-600);
+    cursor: pointer;
+    margin: 0;
+}
+
+.goal-delete {
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0.5rem;
+    color: var(--neutral-400);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+    border-radius: 50%;
+}
+
+.goal-delete:hover {
+    color: #ef4444;
+    background: #fef2f2;
+}
+
+.goal-content .meta {
+    font-size: 0.8rem;
+    color: var(--neutral-500);
+}

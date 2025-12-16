@@ -1,0 +1,188 @@
+/* AdminDashboard.css */
+.admin-page {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+}
+
+.admin-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding: 3rem 1rem;
+    background: linear-gradient(to bottom, #f0fdf4, white);
+    border-radius: var(--radius-xl);
+    border: 1px solid var(--neutral-200);
+}
+
+.admin-header h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    color: var(--neutral-900);
+    margin-bottom: 0.5rem;
+}
+
+/* Tabs */
+.admin-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.admin-tab-btn {
+    padding: 0.75rem 2rem;
+    border: none;
+    background: white;
+    border-radius: 99px;
+    font-weight: 600;
+    color: var(--neutral-500);
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid var(--neutral-200);
+}
+
+.admin-tab-btn:hover {
+    background: var(--neutral-50);
+    color: var(--neutral-900);
+}
+
+.admin-tab-btn.active {
+    background: var(--primary-600);
+    color: white;
+    border-color: var(--primary-600);
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.3);
+}
+
+/* Forms */
+.admin-form-card {
+    background: white;
+    padding: 2rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--neutral-200);
+    margin-bottom: 2rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.admin-form-card h3 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+/* Resource List */
+.resource-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.resource-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--neutral-200);
+    transition: all 0.2s;
+}
+
+.resource-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.resource-info h4 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.1rem;
+}
+
+.resource-meta {
+    font-size: 0.9rem;
+    color: var(--neutral-500);
+}
+
+/* User Table */
+.user-table-container {
+    background: white;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--neutral-200);
+    overflow: hidden;
+    overflow-x: auto;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    border-bottom: 1px solid var(--neutral-100);
+}
+
+.user-table th {
+    background: var(--neutral-50);
+    color: var(--neutral-600);
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.user-table tr:last-child td {
+    border-bottom: none;
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+.role-badge.admin {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.role-badge.user {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.role-badge.therapist {
+    background: #dcfce7;
+    color: #166534;
+}
+
+/* Buttons */
+.btn-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    background: #fecaca;
+}
+
+.btn-delete:active {
+    transform: scale(0.98);
+}

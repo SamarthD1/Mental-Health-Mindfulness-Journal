@@ -1,0 +1,13 @@
+/* Footer.css */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--neutral-400);
+  font-size: 0.875rem;
+  margin-top: auto;
+  /* Pushes footer to bottom */
+}
+
+.footer p {
+  color: inherit;
+}
