@@ -1,7 +1,6 @@
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import User from './models/User.js'
-import Circle from './models/Circle.js'
 
 dotenv.config()
 
@@ -11,7 +10,7 @@ const MONGO_URI =
 
 const seedUsers = async () => {
     try {
-        await mongoose.connect(MONGO_URI, { dbName: 'mentalhealthjournal' })
+        await mongoose.connect(MONGO_URI)
         console.log('Connected to MongoDB...')
 
         const usersToSeed = [
@@ -27,6 +26,24 @@ const seedUsers = async () => {
                 password: 'therapist123',
                 role: 'therapist',
             },
+            {
+                name: 'Therapist User 2',
+                email: 'therapist2@mindspace.com',
+                password: 'therapist123',
+                role: 'therapist',
+            },
+            {
+                name: 'Therapist User 3',
+                email: 'therapist3@mindspace.com',
+                password: 'therapist123',
+                role: 'therapist',
+            },
+            {
+                name: 'Therapist User 4',
+                email: 'therapist4@mindspace.com',
+                password: 'therapist123',
+                role: 'therapist',
+            },
         ]
 
         for (const u of usersToSeed) {
@@ -36,25 +53,6 @@ const seedUsers = async () => {
                 console.log(`Created user: ${u.email} (${u.role})`)
             } else {
                 console.log(`User already exists: ${u.email}`)
-            }
-        }
-
-        // Seed Circles
-        const circlesToSeed = [
-            { name: 'Anxiety Support', description: 'A safe space to share feelings of anxiety.', rules: 'Be kind.' },
-            { name: 'Depression Awareness', description: 'Support for those battling depression.', rules: 'No judgement.' },
-            { name: 'Mindfulness & Meditation', description: 'Discuss techniques and experiences.', rules: 'Stay on topic.' },
-            { name: 'Gratitude', description: 'Share what you are grateful for today.', rules: 'Positive vibes only.' },
-            { name: 'Sleep Struggles', description: 'Tips and support for better sleep.', rules: 'Supportive advice.' }
-        ]
-
-        for (const c of circlesToSeed) {
-            const existing = await Circle.findOne({ name: c.name })
-            if (!existing) {
-                await Circle.create(c)
-                console.log(`Created circle: ${c.name}`)
-            } else {
-                console.log(`Circle already exists: ${c.name}`)
             }
         }
 

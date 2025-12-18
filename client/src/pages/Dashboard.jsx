@@ -59,31 +59,46 @@ const Dashboard = () => {
     // Total
     const total = entries.length;
 
-    // Streak (Approximation: Consecutive unique dates)
-    const dates = [...new Set(entries.map(e => e.date.split('T')[0]))].sort().reverse();
+    // Helper: Get local YYYY-MM-DD from a date string/object
+    const getLocalDay = (dateInput) => {
+      const d = new Date(dateInput);
+      // Adjust to local time so toISOString output matches local calendar date
+      const localDate = new Date(d.getTime() - (d.getTimezoneOffset() * 60000));
+      return localDate.toISOString().split('T')[0];
+    };
+
+    // Streak Logic
+    const dates = [...new Set(entries.map(e => getLocalDay(e.date)))].sort().reverse();
+    const today = getLocalDay(new Date());
+    const yesterday = getLocalDay(new Date(Date.now() - 86400000));
+
     let streak = 0;
-    const today = new Date().toISOString().split('T')[0];
-    const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
 
     // If latest entry is today or yesterday, start counting
     if (dates.length > 0 && (dates[0] === today || dates[0] === yesterday)) {
       streak = 1;
-      let currentDate = new Date(dates[0]);
+      let currentDateString = dates[0]; // YYYY-MM-DD
 
       for (let i = 1; i < dates.length; i++) {
-        const prevDate = new Date(dates[i]);
-        const diffTime = Math.abs(currentDate - prevDate);
+        const prevDateString = dates[i];
+
+        // Parse as simple dates to compare days difference
+        const curr = new Date(currentDateString);
+        const prev = new Date(prevDateString);
+
+        const diffTime = Math.abs(curr - prev);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
         if (diffDays === 1) {
           streak++;
-          currentDate = prevDate;
+          currentDateString = prevDateString;
         } else {
           break;
         }
       }
     }
 
-    return { total, streak, avgMood: 'Great' }; // Mock avgMood logic for now or implement mapping
+    return { total, streak, avgMood: 'Great' };
   }, [entries]);
 
   const quickActions = [

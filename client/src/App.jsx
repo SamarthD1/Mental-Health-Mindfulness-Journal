@@ -32,7 +32,7 @@ const App = () => {
           <Route
             path="/insights"
             element={
-              <PrivateRoute>
+              <PrivateRoute roles={['user']}>
                 <Insights />
               </PrivateRoute>
             }
@@ -40,7 +40,7 @@ const App = () => {
           <Route
             path="/dashboard"
             element={
-              <PrivateRoute>
+              <PrivateRoute roles={['user']}>
                 <Dashboard />
               </PrivateRoute>
             }
@@ -48,7 +48,7 @@ const App = () => {
           <Route
             path="/goals"
             element={
-              <PrivateRoute>
+              <PrivateRoute roles={['user']}>
                 <Goals />
               </PrivateRoute>
             }
@@ -56,7 +56,7 @@ const App = () => {
           <Route
             path="/journal"
             element={
-              <PrivateRoute>
+              <PrivateRoute roles={['user']}>
                 <Journal />
               </PrivateRoute>
             }
@@ -64,7 +64,7 @@ const App = () => {
           <Route
             path="/community"
             element={
-              <PrivateRoute>
+              <PrivateRoute roles={['user', 'therapist', 'admin']}>
                 <Community />
               </PrivateRoute>
             }
@@ -73,7 +73,7 @@ const App = () => {
           <Route
             path="/therapists"
             element={
-              <PrivateRoute>
+              <PrivateRoute roles={['user']}>
                 <SelectTherapist />
               </PrivateRoute>
             }

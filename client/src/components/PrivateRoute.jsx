@@ -17,8 +17,17 @@ const PrivateRoute = ({ children, roles }) => {
     return <Navigate to="/login" state={{ from: location }} replace />
   }
 
+  // If roles are defined and user doesn't have permissions
   if (roles && roles.length > 0 && !roles.includes(user?.role)) {
-    return <Navigate to="/dashboard" replace />
+    // Smart redirect based on role
+    if (user?.role === 'admin') {
+      return <Navigate to="/admin" replace />
+    } else if (user?.role === 'therapist') {
+      return <Navigate to="/therapist-dashboard" replace />
+    } else {
+      // Default user
+      return <Navigate to="/dashboard" replace />
+    }
   }
 
   return children

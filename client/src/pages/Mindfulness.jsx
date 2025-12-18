@@ -131,10 +131,28 @@ const AudioMeditations = () => {
     }, [selectedId])
 
     const togglePlay = () => {
-        if (!audioRef.current) return
-        if (isPlaying) audioRef.current.pause()
-        else audioRef.current.play()
-        setIsPlaying(!isPlaying)
+        if (!audioRef.current || !selected?.audioUrl) return
+
+        if (isPlaying) {
+            audioRef.current.pause()
+            setIsPlaying(false)
+        } else {
+            // Explicitly load if the source changed or to be safe
+            audioRef.current.load()
+
+            const playPromise = audioRef.current.play()
+            if (playPromise !== undefined) {
+                playPromise
+                    .then(() => {
+                        console.log("Playing:", selected.audioUrl)
+                        setIsPlaying(true)
+                    })
+                    .catch((error) => {
+                        console.warn("Playback prevented:", error.message)
+                        setIsPlaying(false)
+                    })
+            }
+        }
     }
 
     const handleSeek = (e) => {
@@ -194,9 +212,11 @@ const AudioMeditations = () => {
                         ) : null}
 
                         <div className="track-info">
-                            <div className="track-icon">
-                                {selected.category === 'video' ? <Play size={32} /> : <Music size={32} />}
-                            </div>
+                            {selected.category !== 'video' && (
+                                <div className="track-icon">
+                                    <Music size={32} />
+                                </div>
+                            )}
                             <h2 className="track-title">{selected.title}</h2>
                             <p className="track-desc">{selected.description}</p>
                             <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'center', marginTop: '0.5rem' }}>
@@ -212,7 +232,13 @@ const AudioMeditations = () => {
 
                         {selected.category !== 'video' && (
                             <div className="player-controls">
-                                <audio ref={audioRef} src={selected.audioUrl} preload="metadata" />
+                                <audio
+                                    key={selected.id || selected._id}
+                                    ref={audioRef}
+                                    src={selected.audioUrl}
+                                    preload="metadata"
+                                    onError={(e) => console.error("Audio Element Error:", e)}
+                                />
                                 <div className="progress-container">
                                     <input
                                         type="range"

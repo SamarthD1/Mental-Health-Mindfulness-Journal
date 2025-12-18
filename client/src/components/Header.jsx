@@ -69,20 +69,26 @@ const Header = () => {
           </NavLink>
           {isAuthenticated && (
             <>
-              <NavLink to="/dashboard" className="nav__link" onClick={() => setIsMobileOpen(false)}>
-                <LayoutDashboard size={18} />
-                Dashboard
-              </NavLink>
-              <NavLink to="/journal" className="nav__link" onClick={() => setIsMobileOpen(false)}>
-                <BookOpen size={18} />
-                Journal
-              </NavLink>
-              <NavLink to="/community" className="nav__link" onClick={() => setIsMobileOpen(false)}>
-                <Users size={18} />
-                Community
-              </NavLink>
-
               {user?.role === 'user' && (
+                <>
+                  <NavLink to="/dashboard" className="nav__link" onClick={() => setIsMobileOpen(false)}>
+                    <LayoutDashboard size={18} />
+                    Dashboard
+                  </NavLink>
+                  <NavLink to="/journal" className="nav__link" onClick={() => setIsMobileOpen(false)}>
+                    <BookOpen size={18} />
+                    Journal
+                  </NavLink>
+                </>
+              )}
+              {(user?.role === 'user' || user?.role === 'therapist' || user?.role === 'admin') && (
+                <NavLink to="/community" className="nav__link" onClick={() => setIsMobileOpen(false)}>
+                  <Users size={18} />
+                  Community
+                </NavLink>
+              )}
+
+              {(user?.role === 'user') && (
                 <NavLink to="/therapists" className="nav__link" onClick={() => setIsMobileOpen(false)}>
                   <UserPlus size={18} />
                   Find Therapist
@@ -136,22 +142,26 @@ const Header = () => {
                     </Link>
                   )}
 
-                  <Link to="/dashboard" className="dropdown-item" onClick={() => setIsProfileOpen(false)}>
-                    <LayoutDashboard size={16} />
-                    Dashboard
-                  </Link>
-                  <Link to="/journal" className="dropdown-item" onClick={() => setIsProfileOpen(false)}>
-                    <BookOpen size={16} />
-                    Journal
-                  </Link>
-                  <Link to="/insights" className="dropdown-item" onClick={() => setIsProfileOpen(false)}>
-                    <BarChart3 size={16} />
-                    Insights
-                  </Link>
-                  <Link to="/goals" className="dropdown-item" onClick={() => setIsProfileOpen(false)}>
-                    <Target size={16} />
-                    Goals
-                  </Link>
+                  {user?.role === 'user' && (
+                    <>
+                      <Link to="/dashboard" className="dropdown-item" onClick={() => setIsProfileOpen(false)}>
+                        <LayoutDashboard size={16} />
+                        Dashboard
+                      </Link>
+                      <Link to="/journal" className="dropdown-item" onClick={() => setIsProfileOpen(false)}>
+                        <BookOpen size={16} />
+                        Journal
+                      </Link>
+                      <Link to="/insights" className="dropdown-item" onClick={() => setIsProfileOpen(false)}>
+                        <BarChart3 size={16} />
+                        Insights
+                      </Link>
+                      <Link to="/goals" className="dropdown-item" onClick={() => setIsProfileOpen(false)}>
+                        <Target size={16} />
+                        Goals
+                      </Link>
+                    </>
+                  )}
 
                   <div style={{ borderTop: '1px solid var(--neutral-100)', margin: '4px 0' }}></div>
 

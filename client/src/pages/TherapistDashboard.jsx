@@ -156,7 +156,7 @@ const TherapistDashboard = () => {
 
                             {/* Mood Chart */}
                             <h3><TrendingUp size={18} style={{ verticalAlign: 'middle', marginRight: '8px' }} /> Mood Trend (Last 30 Days)</h3>
-                            <div style={{ height: '300px', width: '100%', marginTop: '1rem' }}>
+                            <div style={{ height: '300px', width: '100%', minWidth: 0, marginTop: '1rem' }}>
                                 {moodData.length > 0 ? (
                                     <ResponsiveContainer width="100%" height="100%">
                                         <LineChart data={moodData}>
