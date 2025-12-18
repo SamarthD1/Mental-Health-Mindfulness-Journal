@@ -26,7 +26,14 @@ const MONGO_URI =
   process.env.MONGO_URI ||
   'mongodb+srv://samarthd470_db_user:Tjhx74nuX9J9xzwe@mentalhealthjournal.ol0dgmj.mongodb.net/'
 
-app.use(cors())
+// CORS configuration for production
+const corsOptions = {
+  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  credentials: true,
+  optionsSuccessStatus: 200
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
 
 app.use('/api/auth', authRoutes)

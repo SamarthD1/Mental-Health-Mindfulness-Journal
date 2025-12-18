@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:5050/api/therapist'
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5050'
+const API_URL = `${API_BASE}/api/therapist`
 
 const getAuthHeaders = () => {
     const token = localStorage.getItem('token') || localStorage.getItem('mhj_auth') ? JSON.parse(localStorage.getItem('mhj_auth')).token : null

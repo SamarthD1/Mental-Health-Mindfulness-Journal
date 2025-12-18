@@ -6,6 +6,8 @@ import { useAuth } from '../context/AuthContext.jsx'
 import { Trash2, Plus, Users, Music, MessageCircle, ShieldBan, X } from 'lucide-react'
 import './AdminDashboard.css'
 
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5050'
+
 const AdminDashboard = () => {
     const { token } = useAuth()
     const [activeTab, setActiveTab] = useState('resources') // resources | users
@@ -56,7 +58,7 @@ const AdminDashboard = () => {
 
     const fetchUsers = async () => {
         try {
-            const res = await fetch('http://localhost:5050/api/admin/users', {
+            const res = await fetch(`${API_BASE}/api/admin/users`, {
                 headers: { Authorization: `Bearer ${token}` }
             })
             if (!res.ok) throw new Error('Failed to fetch users')
@@ -78,7 +80,7 @@ const AdminDashboard = () => {
     const handleCreateMeditation = async (e) => {
         e.preventDefault()
         try {
-            const res = await fetch('http://localhost:5050/api/meditations', {
+            const res = await fetch(`${API_BASE}/api/meditations`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -98,7 +100,7 @@ const AdminDashboard = () => {
     const handleDeleteMeditation = async (id) => {
         if (!confirm('Are you sure you want to delete this item?')) return
         try {
-            const res = await fetch(`http://localhost:5050/api/meditations/${id}`, {
+            const res = await fetch(`${API_BASE}/api/meditations/${id}`, {
                 method: 'DELETE',
                 headers: { Authorization: `Bearer ${token}` }
             })
@@ -113,7 +115,7 @@ const AdminDashboard = () => {
         const action = currentStatus ? 'unban' : 'ban'
         if (!confirm(`Are you sure you want to ${action} this user?`)) return
         try {
-            const res = await fetch(`http://localhost:5050/api/admin/users/${id}/ban`, {
+            const res = await fetch(`${API_BASE}/api/admin/users/${id}/ban`, {
                 method: 'PUT',
                 headers: { Authorization: `Bearer ${token}` }
             })

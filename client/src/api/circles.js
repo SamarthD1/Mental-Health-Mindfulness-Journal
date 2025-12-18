@@ -1,6 +1,7 @@
 import axios from 'axios'
 
-const API_URL = 'http://localhost:5050/api/circles'
+const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5050'
+const API_URL = `${API_BASE}/api/circles`
 
 const getAuthHeaders = () => {
     try {
