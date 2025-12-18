@@ -60,21 +60,24 @@ app.get('/api/profile', authMiddleware, async (req, res) => {
   }
 })
 
-// Serve static files from React build in production
-if (process.env.NODE_ENV === 'production') {
-  const clientBuildPath = path.join(__dirname, '../../client/dist')
-  app.use(express.static(clientBuildPath))
-
-  // Handle React Router - send all non-API requests to index.html
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(clientBuildPath, 'index.html'))
+// Simple root route for API
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Mental Health Journal API',
+    status: 'running',
+    endpoints: {
+      health: '/api/health',
+      auth: '/api/auth',
+      journal: '/api/journal',
+      goals: '/api/goals',
+      insights: '/api/insights',
+      meditations: '/api/meditations',
+      therapist: '/api/therapist',
+      circles: '/api/circles',
+      admin: '/api/admin'
+    }
   })
-} else {
-  // Development mode root route
-  app.get('/', (req, res) => {
-    res.send('API is running in Development Mode')
-  })
-}
+})
 
 mongoose
   .connect(MONGO_URI)
