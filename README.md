@@ -156,7 +156,7 @@ node src/seed.js
 
 ### Administrator
 - Manage meditation content
-- Create and delete community circles
+- Create and delete community circles and Therapists and Therapists
 - Ban/unban users (soft ban)
 - Full platform oversight
 
