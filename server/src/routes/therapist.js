@@ -171,4 +171,70 @@ router.get('/patient/:id/mood-trend', async (req, res) => {
     }
 })
 
+
+// @route   POST /api/therapist
+// @desc    Create a new therapist
+// @access  Private (Admin Only)
+router.post('/', async (req, res) => {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Not authorized' })
+    }
+    const { name, email, specialty, bio, password } = req.body
+    try {
+        const existingUser = await User.findOne({ email })
+        if (existingUser) return res.status(400).json({ message: 'User already exists' })
+
+        const user = await User.create({
+            name,
+            email,
+            password,
+            role: 'therapist',
+            specialty,
+            bio
+        })
+        res.status(201).json({ message: 'Therapist created successfully', therapist: { id: user._id, name: user.name, email: user.email } })
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+})
+
+// @route   PUT /api/therapist/:id
+// @desc    Update therapist details
+// @access  Private (Admin Only)
+router.put('/:id', async (req, res) => {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Not authorized' })
+    }
+    const { id } = req.params
+    try {
+        const therapist = await User.findByIdAndUpdate(
+            id,
+            { $set: req.body },
+            { new: true, runValidators: true }
+        ).select('-password')
+
+        if (!therapist) return res.status(404).json({ message: 'Therapist not found' })
+        res.json(therapist)
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+})
+
+// @route   DELETE /api/therapist/:id
+// @desc    Delete a therapist
+// @access  Private (Admin Only)
+router.delete('/:id', async (req, res) => {
+    if (req.user.role !== 'admin') {
+        return res.status(403).json({ message: 'Not authorized' })
+    }
+    const { id } = req.params
+    try {
+        const result = await User.findByIdAndDelete(id)
+        if (!result) return res.status(404).json({ message: 'Therapist not found' })
+        res.json({ message: 'Therapist deleted successfully' })
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+})
+
 export default router

@@ -10,9 +10,12 @@ const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5050'
 
 const AdminDashboard = () => {
     const { token } = useAuth()
-    const [activeTab, setActiveTab] = useState('resources') // resources | users
+    const [activeTab, setActiveTab] = useState('resources') // resources | users | therapists | circles
     const [meditations, setMeditations] = useState([])
     const [users, setUsers] = useState([])
+    const [therapists, setTherapists] = useState([])
+    const [newTherapist, setNewTherapist] = useState({ name: '', email: '', password: '', specialty: '', bio: '' })
+
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
 
@@ -69,11 +72,26 @@ const AdminDashboard = () => {
         }
     }
 
+
+    const fetchTherapists = async () => {
+        try {
+            const res = await fetch(`${API_BASE}/api/therapist/list`, {
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            if (!res.ok) throw new Error('Failed to fetch therapists')
+            const data = await res.json()
+            setTherapists(data)
+        } catch (err) {
+            setError(err.message)
+        }
+    }
+
     useEffect(() => {
         if (token) {
             if (activeTab === 'resources') fetchMeditations()
             if (activeTab === 'users') fetchUsers()
             if (activeTab === 'circles') fetchCirclesList()
+            if (activeTab === 'therapists') fetchTherapists()
         }
     }, [activeTab, token])
 
@@ -92,6 +110,40 @@ const AdminDashboard = () => {
             alert('Created successfully!')
             setNewItem({ title: '', description: '', type: 'Meditation', category: 'audio', durationMinutes: 5, audioUrl: '' })
             fetchMeditations()
+        } catch (err) {
+            alert(err.message)
+        }
+    }
+
+    const handleCreateTherapist = async (e) => {
+        e.preventDefault()
+        try {
+            const res = await fetch(`${API_BASE}/api/therapist`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`
+                },
+                body: JSON.stringify(newTherapist)
+            })
+            if (!res.ok) throw new Error('Failed to create therapist')
+            alert('Therapist created successfully!')
+            setNewTherapist({ name: '', email: '', password: '', specialty: '', bio: '' })
+            fetchTherapists()
+        } catch (err) {
+            alert(err.message)
+        }
+    }
+
+    const handleDeleteTherapist = async (id) => {
+        if (!window.confirm('Are you sure you want to delete this therapist?')) return
+        try {
+            const res = await fetch(`${API_BASE}/api/therapist/${id}`, {
+                method: 'DELETE',
+                headers: { Authorization: `Bearer ${token}` }
+            })
+            if (!res.ok) throw new Error('Failed to delete')
+            fetchTherapists()
         } catch (err) {
             alert(err.message)
         }
@@ -217,6 +269,14 @@ const AdminDashboard = () => {
                     Manage Users
                 </button>
                 <button
+                    className={`admin-tab-btn ${activeTab === 'therapists' ? 'active' : ''}`}
+                    onClick={() => setActiveTab('therapists')}
+                >
+                    <Users size={18} style={{ marginRight: 8, verticalAlign: 'middle' }} />
+                    Manage Therapists
+                </button>
+
+                <button
                     className={`admin-tab-btn ${activeTab === 'circles' ? 'active' : ''}`}
                     onClick={() => setActiveTab('circles')}
                 >
@@ -309,6 +369,95 @@ const AdminDashboard = () => {
                                 <button
                                     className="btn-delete"
                                     onClick={() => handleDeleteMeditation(item._id || item.id)}
+                                >
+                                    <Trash2 size={18} />
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
+            {activeTab === 'therapists' && (
+                <div className="tab-content">
+                    <div className="admin-form-card">
+                        <h3>Add New Therapist</h3>
+                        <form onSubmit={handleCreateTherapist}>
+                            <div className="form-row">
+                                <div className="field">
+                                    <label>Name</label>
+                                    <input
+                                        type="text"
+                                        placeholder="Full Name"
+                                        value={newTherapist.name}
+                                        onChange={(e) => setNewTherapist({ ...newTherapist, name: e.target.value })}
+                                        required
+                                    />
+                                </div>
+                                <div className="field">
+                                    <label>Email</label>
+                                    <input
+                                        type="email"
+                                        placeholder="Email Address"
+                                        value={newTherapist.email}
+                                        onChange={(e) => setNewTherapist({ ...newTherapist, email: e.target.value })}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-row">
+                                <div className="field">
+                                    <label>Password</label>
+                                    <input
+                                        type="password"
+                                        placeholder="Password"
+                                        value={newTherapist.password}
+                                        onChange={(e) => setNewTherapist({ ...newTherapist, password: e.target.value })}
+                                        required
+                                    />
+                                </div>
+                                <div className="field">
+                                    <label>Specialty</label>
+                                    <input
+                                        type="text"
+                                        placeholder="e.g. Anxiety, Depression"
+                                        value={newTherapist.specialty}
+                                        onChange={(e) => setNewTherapist({ ...newTherapist, specialty: e.target.value })}
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="field">
+                                <label>Bio</label>
+                                <textarea
+                                    placeholder="Therapist biography..."
+                                    value={newTherapist.bio}
+                                    onChange={(e) => setNewTherapist({ ...newTherapist, bio: e.target.value })}
+                                    required
+                                ></textarea>
+                            </div>
+                            <button type="submit" className="button primary" style={{ width: '100%' }}>
+                                <Plus size={18} /> Add Therapist
+                            </button>
+                        </form>
+                    </div>
+
+                    <div className="resource-list">
+                        {therapists.map((therapist) => (
+                            <div key={therapist._id} className="resource-item">
+                                <div className="resource-info">
+                                    <h4>{therapist.name}</h4>
+                                    <div className="resource-meta">
+                                        {therapist.specialty} • {therapist.email}
+                                    </div>
+                                    <p style={{ fontSize: '0.85rem', color: '#666', marginTop: '0.25rem' }}>
+                                        {therapist.bio && therapist.bio.substring(0, 100)}...
+                                    </p>
+                                </div>
+                                <button
+                                    className="btn-delete"
+                                    onClick={() => handleDeleteTherapist(therapist._id)}
+                                    title="Delete Therapist"
                                 >
                                     <Trash2 size={18} />
                                 </button>
