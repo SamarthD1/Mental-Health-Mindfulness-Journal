@@ -152,7 +152,7 @@ node src/seed.js
 
 **Test Account:**
 - Email: `therapist@mindspace.com`
-- Password: `therapist123`
+- Password: `therapistt1234`
 
 ### Administrator
 - Manage meditation content
@@ -165,7 +165,7 @@ node src/seed.js
 
 **Test Account:**
 - Email: `admin@mindspace.com`
-- Password: `admin123`
+- Password: `adminn1234`
 
 ## 📁 Project Structure
 
